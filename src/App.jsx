@@ -26,9 +26,9 @@ import "./styles/Header.css";
 // Contexts
 // const AuthContext = createContext();
 const PostDataContext = createContext();
-const BookDataContext = createContext();
-const CharacterDataContext = createContext();
-const UserDataContext = createContext();
+// const BookDataContext = createContext();
+// const CharacterDataContext = createContext();
+// const UserDataContext = createContext();
 
 // Auth Provider
 // const AuthProvider = ({ children }) => {
@@ -54,8 +54,8 @@ const UserDataContext = createContext();
 
 function App() {
   const [posts, setPosts] = useState([]);
-  const [books, setBooks] = useState([]);
-  const [characters, setCharacters] = useState([]);
+  // const [books, setBooks] = useState([]);
+  // const [characters, setCharacters] = useState([]);
   // const [users, setUsers] = useState([]);
 
   useEffect(() => {
@@ -85,14 +85,7 @@ function App() {
           <Route path="/signin" element={<SignIn />} />
 
           {/* User Profile Page */}
-          <Route
-            path="/profile"
-            element={
-              <ProtectedLayout>
-                <Profile />
-              </ProtectedLayout>
-            }
-          />
+          <Route path="/profile" element={<Profile />} />
 
           {/* BlogPosts can be seen by anybody, NOT edited (edit only by the author) */}
           <Route path="/posts" element={<Posts />} />
@@ -108,9 +101,9 @@ function App() {
           <Route
             path="/users"
             element={
-              <ProtectedLayout>
-                <Users />
-              </ProtectedLayout>
+              // <ProtectedLayout>
+              <Users />
+              // </ProtectedLayout>
             }
           />
           <Route path="/users/:id" element={<Users />} />
@@ -129,10 +122,10 @@ function App() {
 }
 
 export {
-  AuthContext,
+  // AuthContext,
   PostDataContext,
-  BookDataContext,
-  CharacterDataContext,
-  UserDataContext,
+  // BookDataContext,
+  // CharacterDataContext,
+  // UserDataContext,
 };
 export default App;
