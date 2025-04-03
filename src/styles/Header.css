@@ -1,0 +1,36 @@
+@import "tailwindcss";
+
+/* Header Styles */
+.header-container {
+  @apply flex items-center rounded-full items-center justify-center p-4;
+  box-shadow: 0 4px 12px rgba(2, 136, 209, 0.5);
+}
+
+.header-logo-container {
+  @apply flex items-center m-5;
+}
+
+.img-logo {
+  @apply border-4 border-orange-600 rounded-[30%] w-[40%] h-[40%];
+}
+
+.header-title-container {
+  @apply flex;
+}
+
+.header-title {
+  @apply text-3xl text-white;
+  font: "Cinzel", serif;
+}
+
+.header-nav {
+  @apply flex flex gap-10 list-none;
+}
+
+.header-nav-li a {
+  @apply no-underline text-inherit;
+}
+
+.header-nav-li:hover {
+  @apply text-orange-600 cursor-pointer;
+}
