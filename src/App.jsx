@@ -61,7 +61,7 @@ function App() {
   useEffect(() => {
     fetch(`${import.meta.env.VITE_API_URL}/posts`, {
       method: "GET",
-
+      mode: "cors",
       headers: {
         "Content-Type": "application/json",
       },
