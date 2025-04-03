@@ -88,12 +88,13 @@ function App() {
 
   return (
     <div>
+      {/* PROVIDER starts here */}
       <AuthProvider>
-        {" "}
         <PostDataContext.Provider value={posts}>
           <BookDataContext.Provider value={books}>
             <CharacterDataContext.Provider value={characters}>
               <UserDataContext.Provider value={users}>
+                {/* PROVIDER END */}
                 <Header />
                 <Routes>
                   {/* HOME */}
