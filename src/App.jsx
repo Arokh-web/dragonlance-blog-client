@@ -59,7 +59,13 @@ function App() {
   // const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    fetch(`${import.meta.env.VITE_API_URL}/posts`)
+    fetch(`${import.meta.env.VITE_API_URL}/posts`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        // Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    })
       .then((res) => res.json())
       .then(setPosts);
     fetch(`${import.meta.env.VITE_API_URL}/dragonlance_books`)
