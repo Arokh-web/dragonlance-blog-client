@@ -1,16 +1,16 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { AuthContext } from "../App";
+// import { AuthContext } from "../App";
 import { useContext } from "react";
 
 const Header = () => {
-  const { setIsAuthenticated, isAuthenticated } = useContext(AuthContext);
-  const { auth } = useContext(AuthContext);
+  // const { setIsAuthenticated, isAuthenticated } = useContext(AuthContext);
+  // const { auth } = useContext(AuthContext);
 
-  const handleLogout = () => {
-    setIsAuthenticated(false);
-    localStorage.removeItem("token");
-  };
+  // const handleLogout = () => {
+  //   setIsAuthenticated(false);
+  //   localStorage.removeItem("token");
+  // };
 
   return (
     <div className="header-container flex-col">
@@ -27,7 +27,7 @@ const Header = () => {
         </div>
       </div>
 
-      {/* NAVIGATION */}
+      {/* NAVIGATION
       <nav>
         <ul className="header-nav">
           <li className="header-nav-li">
@@ -71,7 +71,7 @@ const Header = () => {
             )}
           </li>
         </ul>
-      </nav>
+      </nav> */}
     </div>
   );
 };
