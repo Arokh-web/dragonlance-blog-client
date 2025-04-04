@@ -5,11 +5,15 @@ import { AuthContext } from "../App";
 
 const Home = () => {
   const { isAuthenticated } = useContext(AuthContext);
-  const { auth } = useContext(AuthContext);
 
   return (
     <div>
-      Home<Posts></Posts>
+      <div>
+        Welcome to the Dragonlance Blog! You are currently
+        {isAuthenticated ? "Logged in" : "Not logged in"}
+      </div>
+
+      <Posts />
     </div>
   );
 };

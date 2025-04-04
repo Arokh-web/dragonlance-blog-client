@@ -93,10 +93,10 @@ function App() {
     <div>
       {/* PROVIDER starts here */}
       <AuthProvider>
-        <PostDataContext.Provider value={posts}>
-          <BookDataContext.Provider value={books}>
-            <CharacterDataContext.Provider value={characters}>
-              <UserDataContext.Provider value={users}>
+        <PostDataContext.Provider value={{ posts }}>
+          <BookDataContext.Provider value={{ books }}>
+            <CharacterDataContext.Provider value={{ characters }}>
+              <UserDataContext.Provider value={{ users }}>
                 {/* PROVIDER END */}
                 <Header />
                 <Routes>
