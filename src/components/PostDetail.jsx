@@ -1,50 +1,98 @@
-import React from "react";
+import React, { use } from "react";
+import { useContext, useEffect, useState } from "react";
+import { BookDataContext, CharacterDataContext } from "../App";
+import { useParams, useNavigate } from "react-router-dom";
+import ButtonsBar from "./ButtonsBar";
 
 const PostDetail = ({ post }) => {
+  const { books } = useContext(BookDataContext);
+  const { characters } = useContext(CharacterDataContext);
+
   // const { id } = useParams();
-  // const isCreateMode = id === "new";
-  // const [post, setPost] = useState({});
-  // const [isEditMode, setIsEditMode] = useState(false);
+  // const isEditMode = id === "new";
   // const navigate = useNavigate();
 
   // useEffect(() => {
-  //   if (isCreateMode) {
-  //     setIsEditMode(true);
+  //   if (isEditMode) {
   //     setPost({
-
+  //       title: "",
+  //       content: "",
+  //       cover: "",
+  //       ref_book_id: null,
+  //       ref_character_id: null,
   //     });
   //     return;
   //   }
+  // }, [id, isEditMode]);
 
-  // fetch(`http://localhost:5000/posts/${id}`)
-  //   .then((res) => res.json())
-  //   .then((data) => {
-  //     setEvent(data);
-  //   });
-  // }, [id, isCreateMode]);
+  const [author, setAuthor] = useState([]);
 
-  if (!post) return null;
+  if (!post) {
+    return <div>Loading...</div>;
+  }
+
+  useEffect(() => {
+    if (post.author_id) {
+      fetch(`${import.meta.env.VITE_API_URL}/users/${post.author_id}`, {
+        method: "GET",
+        mode: "cors",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (!data) {
+            console.error("Author not found");
+            return;
+          }
+          setAuthor(data[0]);
+        });
+    }
+  }, [post]);
+
+  const rawDate = new Date(post.date);
+  const [date, time] = [
+    rawDate.toISOString().slice(0, 10),
+    rawDate.toTimeString().slice(0, 5),
+  ];
+
+  console.log(author);
+
+  const current_book_ref =
+    post.ref_book_id && books?.length
+      ? books.find((book) => book.id === post.ref_book_id)
+      : null;
+  const current_char_ref =
+    post.ref_character_id && characters?.length
+      ? characters.find((character) => character.id === post.ref_character_id)
+      : null;
 
   return (
     <div className="post-detail-container">
-      <img
-        src={`/${post.cover}`}
-        alt={post.title}
-        className="post-detail-image"
-      />
+      <div className="post-detail-header">
+        <img
+          src={`/${post.cover}`}
+          alt={post.title}
+          className="post-detail-image"
+        />
+        <div className="post-detail-meta">
+          <ButtonsBar postId={post.id} />
+          <p>
+            by Author {author.username} · {date}, {time} o'clock
+          </p>
+        </div>
+      </div>
 
       <div className="post-detail-content">
         <h1 className="post-detail-title">{post.title}</h1>
-        <p className="post-detail-meta">
-          by Author #{post.author_id} ·{post.date}
-        </p>
 
         <p className="post-detail-body">{post.content}</p>
 
         {post.ref_book_id && (
           <div className="mt-6">
             <span className="font-semibold text-sm text-gray-700">
-              Book Reference: #{post.ref_book_id}
+              Book Reference: {current_book_ref.title}
             </span>
           </div>
         )}
@@ -52,7 +100,7 @@ const PostDetail = ({ post }) => {
         {post.ref_character_id && (
           <div>
             <span className="font-semibold text-sm text-gray-700">
-              Character Reference: #{post.ref_character_id}
+              Character Reference: {current_char_ref.name}
             </span>
           </div>
         )}

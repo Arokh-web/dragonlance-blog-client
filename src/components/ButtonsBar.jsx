@@ -1,30 +1,35 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "../App";
 
 const ButtonsBar = ({ postId }) => {
+  const { isAuthenticated } = useContext(AuthContext);
+  const { auth } = useContext(AuthContext);
+  const { id } = useParams();
+
   return (
     <div className="buttonbar-container">
       {/* FOR OVERVIEW / POSTS PAGE - BUTTON BAR 1 */}
       {/* BUTTONS for every user */}
       <div className="buttons-every-user-container">
-        <Link to={`/posts/${postId}`}>
-          <button>Read more</button>
-        </Link>
-
         <button>Like </button>
         <button>Share</button>
         <button>Copy Link to Post</button>
+        {!id ? (
+          <Link to={`/posts/${postId}`}>
+            <button>Read more</button>
+          </Link>
+        ) : (
+          <button className="mt-25">Back</button>
+        )}
       </div>
+
       {/* FOR DETAIL PAGE BUTTON BAR 2*/}
+
       {/* BUTTONS for every user */}
-      {postId ? (
+      {id ? (
         <>
-          <div className="buttons-every-user-container">
-            <button>Comment</button>
-            <button>Like</button>
-            <button>Share</button>
-            <button>Copy Link to Post</button>
-          </div>
           {/* BUTTONS for post-author*/}
           <div className="buttons-post-author-container">
             <button>Edit</button>
