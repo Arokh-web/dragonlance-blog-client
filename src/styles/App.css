@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-/* Base dragonlance colors */
+/* Base dragonlance colors, for HOME and APP  */
 
 #root {
   @apply max-w-[1280px] mx-auto p-8;
