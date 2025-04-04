@@ -20,7 +20,7 @@
 }
 
 .header-title {
-  @apply text-3xl text-white;
+  @apply text-3xl text-red-800/80;
   font: "Cinzel", serif;
 }
 

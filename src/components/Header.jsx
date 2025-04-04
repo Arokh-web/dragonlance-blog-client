@@ -21,7 +21,7 @@ const Header = () => {
         </div>
         {/* TITLE */}
         <div name="title">
-          <h1 className="header-title">
+          <h1 className="header-title ">
             The Dragonlance <br></br>Fan Blog!
           </h1>
         </div>
