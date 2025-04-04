@@ -1,9 +1,11 @@
-import React from 'react'
+import React from "react";
+import { useContext } from "react";
+import { AuthContext } from "../App";
 
 const SignIn = () => {
-  return (
-    <div>SignIn</div>
-  )
-}
+  const { isAuthenticated } = useContext(AuthContext);
+  const { auth } = useContext(AuthContext);
+  return <div>SignIn</div>;
+};
 
-export default SignIn
+export default SignIn;

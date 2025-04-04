@@ -1,9 +1,11 @@
-import React from 'react'
+import React from "react";
+import { useContext } from "react";
+import { AuthContext } from "../App";
 
 const Characters = () => {
-  return (
-    <div>Characters</div>
-  )
-}
+  const { isAuthenticated } = useContext(AuthContext);
+  const { auth } = useContext(AuthContext);
+  return <div>Characters</div>;
+};
 
-export default Characters
+export default Characters;

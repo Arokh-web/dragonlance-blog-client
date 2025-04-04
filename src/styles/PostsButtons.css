@@ -1,0 +1,89 @@
+@import "tailwindcss";
+
+/* Base dragonlance colors:   
+#e0f2f1, #b3e5fc, #0288d1 for BG
+ box-shadow: 25px 25px 10px rgba(14, 129, 236, 0.458),
+    inset -8px -8px 20px rgba(175, 29, 27, 0.4);
+  text-shadow: -5px 10px 2px rgba(175, 29, 27, 0.4);
+*/
+
+/* Button-Bars here */
+.buttonbar-container {
+  @apply flex justify-center items-center p-4 bg-white rounded-lg shadow-lg;
+}
+
+.buttonbar-container button {
+  @apply bg-blue-500 text-white  font-medium py-1 px-3 rounded-xl shadow-md transition duration-200 ease-in-out 
+  hover:bg-blue-600 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-400;
+}
+
+.buttons-every-user-container {
+  @apply flex flex-wrap gap-2;
+}
+
+.buttons-post-author-container {
+  @apply flex flex-wrap gap-2;
+}
+
+.buttons-admin-container {
+  @apply flex flex-wrap gap-2;
+}
+
+/* PostCard Styles */
+
+.post-card {
+  @apply flex flex-col md:flex-row gap-4 p-4 rounded-2xl bg-white shadow-lg  m-4;
+}
+
+.post-image {
+  @apply w-full md:w-48 h-48 object-cover rounded-xl;
+}
+
+.post-content {
+  @apply flex flex-col justify-between flex-1;
+}
+
+.post-title {
+  @apply text-xl font-bold mb-2;
+}
+
+.post-meta {
+  @apply text-sm text-gray-600 mb-2;
+}
+
+.post-excerpt {
+  @apply text-base text-gray-800 line-clamp-3;
+}
+
+/* PostDetail Styles */
+
+.post-detail-container {
+  @apply flex flex-col md:flex-row gap-6 p-6 rounded-2xl m-4 bg-white shadow-xl;
+  box-shadow: 25px 25px 10px rgba(14, 129, 236, 0.458),
+    inset -8px -8px 20px rgba(175, 29, 27, 0.4);
+}
+
+.post-detail-image {
+  @apply w-full max-w-md h-60 object-cover rounded-2xl shadow-md;
+}
+
+.post-detail-content {
+  @apply flex flex-col justify-start flex-1;
+}
+
+.post-detail-title {
+  @apply text-2xl font-bold mb-3;
+  text-shadow: -5px 10px 2px rgba(175, 29, 27, 0.4);
+}
+
+.post-detail-meta {
+  @apply text-sm text-gray-600 mb-4;
+}
+
+.post-detail-body {
+  @apply text-base text-gray-800 leading-relaxed whitespace-pre-line;
+}
+
+.post-detail-back-button {
+  @apply mt-6 w-max text-sm text-blue-700 hover:underline cursor-pointer;
+}
