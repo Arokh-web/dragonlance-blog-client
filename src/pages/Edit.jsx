@@ -6,18 +6,25 @@ import EditForm from "../components/EditForm";
 const EditPage = ({ post }) => {
   const { id } = useParams();
   const [postEdit, setPostEdit] = useState(post);
-  !id ? <div>Loading...</div> : loadPost(id);
+  id === undefined ? (
+    <div>
+      Error Loading...
+      <EditForm onSave={handlePostUpdate} />
+    </div>
+  ) : (
+    loadPost(id)
+  );
 
   const loadPost = (id) => {
     fetch(`${import.meta.env.VITE_API_URL}/posts/${id}`, {
       method: "GET",
-      mode: "no-cors",
+      mode: "cors",
       headers: {
         "Content-Type": "application/json",
       },
     })
       .then((res) => res.json())
-      .then((data) => setPost(data[0]));
+      .then((data) => setPostEdit(data[0]));
   };
 
   const handlePostUpdate = (updatedPost) => {
