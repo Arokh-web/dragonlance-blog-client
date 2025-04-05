@@ -6,14 +6,6 @@ import EditForm from "../components/EditForm";
 const EditPage = ({ post }) => {
   const { id } = useParams();
   const [postEdit, setPostEdit] = useState(post);
-  id === undefined ? (
-    <div>
-      Error Loading...
-      <EditForm onSave={handlePostUpdate} />
-    </div>
-  ) : (
-    loadPost(id)
-  );
 
   const loadPost = (id) => {
     fetch(`${import.meta.env.VITE_API_URL}/posts/${id}`, {
@@ -42,6 +34,15 @@ const EditPage = ({ post }) => {
         window.location.href = `/posts/${id}`;
       });
   };
+
+  id === undefined ? (
+    <div>
+      Error Loading...
+      <EditForm onSave={handlePostUpdate} />
+    </div>
+  ) : (
+    loadPost(id)
+  );
 
   if (!post) return <div>Loading...</div>;
 
