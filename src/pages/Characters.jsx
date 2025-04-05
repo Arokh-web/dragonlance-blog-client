@@ -1,11 +1,18 @@
-import React from "react";
-import { useContext } from "react";
-import { AuthContext } from "../App";
+import React, { useContext } from "react";
+import { CharacterDataContext } from "../App";
+import CharacterCard from "../components/CharacterCard";
 
 const Characters = () => {
-  const { isAuthenticated } = useContext(AuthContext);
-  const { auth } = useContext(AuthContext);
-  return <div>Characters</div>;
+  const { characters } = useContext(CharacterDataContext);
+
+  return (
+    <div className="page-container">
+      <h1 className="page-title">Characters of Krynn</h1>
+      {characters.map((char) => (
+        <CharacterCard key={char.id} character={char} />
+      ))}
+    </div>
+  );
 };
 
 export default Characters;

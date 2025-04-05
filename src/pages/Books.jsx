@@ -1,11 +1,18 @@
-import React from "react";
-import { useContext } from "react";
-import { AuthContext } from "../App";
+import React, { useContext } from "react";
+import { BookDataContext } from "../App";
+import BookCard from "../components/BookCard";
 
 const Books = () => {
-  const { isAuthenticated } = useContext(AuthContext);
-  const { auth } = useContext(AuthContext);
-  return <div>Books</div>;
+  const { books } = useContext(BookDataContext);
+
+  return (
+    <div className="page-container">
+      <h1 className="page-title">Dragonlance Books</h1>
+      {books.map((book) => (
+        <BookCard key={book.id} book={book} />
+      ))}
+    </div>
+  );
 };
 
 export default Books;
