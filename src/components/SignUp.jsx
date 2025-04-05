@@ -1,41 +1,38 @@
-import React, { useContext, useState } from "react";
+import React, { useState, useContext } from "react";
 import { AuthContext } from "../App";
 
-const SignIn = () => {
+const SignUp = () => {
   const { setIsAuthenticated } = useContext(AuthContext);
   const [email, setEmail] = useState("");
-  const [password, setpassword] = useState("");
+  const [password, setPassword] = useState("");
 
-  const handleSignIn = (e) => {
+  const handleCreateUser = (e) => {
     e.preventDefault();
 
-    fetch(`${import.meta.env.VITE_API_URL}/users/login`, {
+    fetch(`${import.meta.env.VITE_API_URL}/users`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
         email: email,
-        password_hash: password,
+        password: password,
       }),
     })
       .then((res) => res.json())
       .then((data) => {
-        if (data.token) {
-          setIsAuthenticated(true);
-          localStorage.setItem("token", data.token);
-          console.log("You are now logged in!");
-          window.location.href = "/posts";
-        } else {
-          alert(data.error);
-        }
+        console.log("You are now signed up!");
+        window.location.href = "/signin";
+      })
+      .catch((error) => {
+        console.log("Sign-up failed: ", error);
       });
   };
 
   return (
     <div className="sign-container">
-      <h2>SignIn</h2>
-      <form className="sign-form" onSubmit={handleSignIn}>
+      <h2>SignUp</h2>
+      <form className="sign-form" onSubmit={handleCreateUser}>
         <input
           type="text"
           name="email"
@@ -49,15 +46,15 @@ const SignIn = () => {
           name="password"
           placeholder="password"
           value={password}
-          onChange={(e) => setpassword(e.target.value)}
+          onChange={(e) => setPassword(e.target.value)}
           className="input-style"
         />
-        <button className="button-style" type="submit">
-          Sign In
+        <button type="submit" className="button-style">
+          Create User
         </button>
       </form>
     </div>
   );
 };
 
-export default SignIn;
+export default SignUp;

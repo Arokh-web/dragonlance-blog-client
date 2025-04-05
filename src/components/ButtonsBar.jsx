@@ -4,7 +4,7 @@ import { useContext } from "react";
 import { AuthContext } from "../App";
 
 const ButtonsBar = ({ postId }) => {
-  const { isAuthenticated } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const { auth } = useContext(AuthContext);
   const { id } = useParams();
 
@@ -21,28 +21,33 @@ const ButtonsBar = ({ postId }) => {
             <button>Read more</button>
           </Link>
         ) : (
-          <button className="mt-25">Back</button>
+          <Link to={`posts`}>
+            <button className="mt-25">Back</button>
+          </Link>
         )}
       </div>
 
       {/* FOR DETAIL PAGE BUTTON BAR 2*/}
 
-      {/* BUTTONS for every user */}
       {id ? (
         <>
           {/* BUTTONS for post-author*/}
-          <div className="buttons-post-author-container">
-            <button>Edit</button>
-            <button>Delete</button>
-          </div>
+          {user.is_author && (
+            <div className="buttons-post-author-container">
+              <button>Edit</button>
+              <button>Delete</button>
+            </div>
+          )}
 
           {/* BUTTONS for admin */}
-          <div className="buttons-admin-container">
-            <button>Block</button>
-            <button>Moderate</button>
-            <button>Change Tags</button>
-            <button>See Origin</button>
-          </div>
+          {user.is_admin && (
+            <div className="buttons-admin-container">
+              <button>Block</button>
+              <button>Moderate</button>
+              <button>Change Tags</button>
+              <button>See Origin</button>
+            </div>
+          )}
         </>
       ) : (
         ""

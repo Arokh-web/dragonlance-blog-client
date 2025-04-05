@@ -11,7 +11,6 @@ import NotFound from "./pages/NotFound";
 // Imports: Components
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import SignIn from "./components/SignIn";
 
 // Modules
 import { Routes, Route, Navigate } from "react-router-dom";
@@ -23,6 +22,7 @@ import "./styles/Header.css";
 import "./styles/Footer.css";
 import "./styles/Home.css";
 import "./styles/PostsButtons.css";
+import "./styles/SignElements.css";
 
 // Contexts
 const AuthContext = createContext();
@@ -35,13 +35,28 @@ const UserDataContext = createContext();
 const AuthProvider = ({ children }) => {
   const storedToken = localStorage.getItem("token");
   const [isAuthenticated, setIsAuthenticated] = useState(!!storedToken);
+  const [user, setUser] = useState([]);
+
+  // DEFINING USER after login
+  if (storedToken) {
+    fetch(`${import.meta.env.VITE_API_URL}/me`, {
+      headers: { Authorization: `Bearer ${storedToken}` },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setUser(data); //to get is_admin, is_author etc.
+        setIsAuthenticated(true);
+      });
+  }
 
   useEffect(() => {
     setIsAuthenticated(!!storedToken);
   }, [storedToken]);
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated }}>
+    <AuthContext.Provider
+      value={{ isAuthenticated, setIsAuthenticated, user, setUser }}
+    >
       {children}
     </AuthContext.Provider>
   );
@@ -57,8 +72,8 @@ function App() {
   const [posts, setPosts] = useState([]);
   const [books, setBooks] = useState([]);
   const [characters, setCharacters] = useState([]);
-  const [users, setUsers] = useState([]);
 
+  // FETCHING DATA FROM API
   useEffect(() => {
     fetch(`${import.meta.env.VITE_API_URL}/posts`, {
       method: "GET",
@@ -96,50 +111,47 @@ function App() {
         <PostDataContext.Provider value={{ posts }}>
           <BookDataContext.Provider value={{ books }}>
             <CharacterDataContext.Provider value={{ characters }}>
-              <UserDataContext.Provider value={{ users }}>
-                {/* PROVIDER END */}
-                <Header />
-                <Routes>
-                  {/* HOME */}
-                  <Route path="/" element={<Home />} />
-                  <Route path="/signpage" element={<SignPage />} />
-                  <Route path="/signin" element={<SignIn />} />
+              {/* PROVIDER END */}
+              <Header />
+              <Routes>
+                {/* HOME */}
+                <Route path="/" element={<Home />} />
+                <Route path="/signpage" element={<SignPage />} />
 
-                  {/* User Profile Page */}
-                  <Route path="/profile" element={<Profile />} />
+                {/* User Profile Page */}
+                <Route path="/profile" element={<Profile />} />
 
-                  {/* BlogPosts can be seen by anybody, NOT edited (edit only by the author) */}
-                  <Route path="/posts" element={<Posts />} />
-                  <Route path="/posts/:id" element={<Posts />} />
+                {/* BlogPosts can be seen by anybody, NOT edited (edit only by the author) */}
+                <Route path="/posts" element={<Posts />} />
+                <Route path="/posts/:id" element={<Posts />} />
 
-                  {/* Books and Characters can be seen by anybody, NOT edited /edit only by the admin */}
-                  <Route path="/dragonlance_books" element={<Books />} />
-                  <Route path="/dragonlance_books/:id" element={<Books />} />
-                  <Route
-                    path="/dragonlance_characters"
-                    element={<Characters />}
-                  />
-                  <Route
-                    path="/dragonlance_characters/:id"
-                    element={<Characters />}
-                  />
+                {/* Books and Characters can be seen by anybody, NOT edited /edit only by the admin */}
+                <Route path="/dragonlance_books" element={<Books />} />
+                <Route path="/dragonlance_books/:id" element={<Books />} />
+                <Route
+                  path="/dragonlance_characters"
+                  element={<Characters />}
+                />
+                <Route
+                  path="/dragonlance_characters/:id"
+                  element={<Characters />}
+                />
 
-                  {/* Users can be seen by admins only, specific user data for profile needed */}
-                  <Route
-                    path="/users"
-                    element={
-                      <ProtectedLayout>
-                        <Users />
-                      </ProtectedLayout>
-                    }
-                  />
-                  <Route path="/users/:id" element={<Users />} />
+                {/* Users can be seen by admins only, specific user data for profile needed */}
+                <Route
+                  path="/users"
+                  element={
+                    <ProtectedLayout>
+                      <Users />
+                    </ProtectedLayout>
+                  }
+                />
+                <Route path="/users/:id" element={<Users />} />
 
-                  {/* FALLBACK: Redirect to Home if no route matches */}
-                  <Route path="*" element={<NotFound />} />
-                </Routes>
-                <Footer />
-              </UserDataContext.Provider>
+                {/* FALLBACK: Redirect to Home if no route matches */}
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+              <Footer />
             </CharacterDataContext.Provider>
           </BookDataContext.Provider>
         </PostDataContext.Provider>

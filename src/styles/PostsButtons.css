@@ -12,7 +12,8 @@
   @apply flex  align-baseline gap-10 p-4 bg-white rounded-lg;
 }
 
-.buttonbar-container button {
+.buttonbar-container,
+button {
   @apply bg-red-800/40
    text-white  text-sm py-1 px-3 rounded-xl shadow-md transition duration-200 ease-in-out 
   hover:bg-red-800/80 hover:scale-105 max-h-12;

@@ -1,0 +1,31 @@
+@import "tailwindcss";
+
+/* Base dragonlance colors:   
+#e0f2f1, #b3e5fc, #0288d1 for BG
+ box-shadow: 25px 25px 10px rgba(14, 129, 236, 0.458),
+    inset -8px -8px 20px rgba(175, 29, 27, 0.4);
+  text-shadow: -5px 10px 2px rgba(175, 29, 27, 0.4);
+*/
+
+.sign-page-container {
+  @apply flex flex-col items-center m-4 justify-center gap-8 bg-gradient-to-r from-[#e0f2f1] to-[#b3e5fc] shadow-lg rounded-2xl p-6;
+  box-shadow: 25px 25px 10px rgba(14, 129, 236, 0.458),
+    inset -8px -8px 20px rgba(175, 29, 27, 0.4);
+  text-shadow: -5px 10px 2px rgba(175, 29, 27, 0.4);
+}
+
+.sign-section {
+  @apply flex flex-col items-center justify-center w-full max-w-md bg-white rounded-lg shadow-lg p-6;
+  box-shadow: 25px 25px 10px rgba(14, 129, 236, 0.458),
+    inset -8px -8px 20px rgba(175, 29, 27, 0.4);
+}
+
+button {
+  @apply bg-red-800/40
+     text-white  text-sm py-1 px-3 rounded-xl shadow-md transition duration-200 ease-in-out 
+    hover:bg-red-800/80 hover:scale-105 max-h-12;
+}
+
+input {
+  @apply w-full p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500;
+}
