@@ -6,8 +6,9 @@ import EditForm from "../components/EditForm";
 const EditPage = ({ post }) => {
   const { id } = useParams();
   const [postEdit, setPostEdit] = useState(post);
+  !id ? <div>Loading...</div> : loadPost(id);
 
-  useEffect(() => {
+  const loadPost = (id) => {
     fetch(`${import.meta.env.VITE_API_URL}/posts/${id}`, {
       method: "GET",
       mode: "no-cors",
@@ -17,7 +18,7 @@ const EditPage = ({ post }) => {
     })
       .then((res) => res.json())
       .then((data) => setPost(data[0]));
-  }, [id]);
+  };
 
   const handlePostUpdate = (updatedPost) => {
     fetch(`${import.meta.env.VITE_API_URL}/posts`, {
