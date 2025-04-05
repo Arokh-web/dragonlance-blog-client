@@ -4,8 +4,10 @@ import { useContext } from "react";
 import { AuthContext } from "../App";
 
 const ButtonsBar = ({ postId }) => {
-  const { admin, author } = useContext(AuthContext);
+  const { admin, author, user } = useContext(AuthContext);
   const { id } = useParams();
+
+  console.log(admin, author, id);
 
   const copyLink = () => {
     navigator.clipboard.writeText(window.location.href).then(() => {
@@ -37,13 +39,14 @@ const ButtonsBar = ({ postId }) => {
       {id ? (
         <>
           {/* BUTTONS for post-author*/}
-          {author ||
-            (admin && (
-              <div className="buttons-post-author-container">
+          {(author || admin) && (
+            <div className="buttons-post-author-container">
+              <Link to={edit} post={post}>
                 <button>Edit</button>
-                <button>Delete</button>
-              </div>
-            ))}
+              </Link>
+              <button>Delete</button>
+            </div>
+          )}
 
           {/* BUTTONS for admin */}
           {admin && (

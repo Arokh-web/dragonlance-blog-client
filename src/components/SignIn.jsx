@@ -2,11 +2,10 @@ import React, { useContext, useState } from "react";
 import { AuthContext } from "../App";
 
 const SignIn = () => {
-  const { setIsAuthenticated, setUser } = useContext(AuthContext);
+  const { setIsAuthenticated, setUser, setAdmin, setAuthor } =
+    useContext(AuthContext);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [admin, setAdmin] = useState(false);
-  const [author, setAuthor] = useState(false);
 
   const handleSignIn = (e) => {
     e.preventDefault();
@@ -26,22 +25,16 @@ const SignIn = () => {
       .then((res) => res.json())
       .then((data) => {
         console.log("Login response:", data);
-        if (data.created_at) {
-          setIsAuthenticated(true);
-          setUser(data);
-          localStorage.setItem("token", data.created_at);
+        setIsAuthenticated(true);
+        console.log("User logged in:", data.username);
 
-          window.location.href = "/";
-          if (data.is_admin) {
-            setAdmin(true);
-          }
-
-          if (data.is_author) {
-            setAuthor(true);
-          }
-        } else {
-          console.log(data.error);
-        }
+        setUser(data);
+        setAdmin(data.is_admin);
+        console.log("User ID admin?:", data.is_admin);
+        setAuthor(data.is_author);
+        console.log("User ID author?:", data.is_author);
+        localStorage.setItem("token", data.created_at);
+        // window.location.href = "/";
       });
   };
 

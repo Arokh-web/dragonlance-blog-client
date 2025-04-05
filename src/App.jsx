@@ -8,7 +8,7 @@ import Profile from "./pages/Profile";
 import ProfilesAdmin from "./pages/ProfilesAdmin";
 import Users from "./pages/Users";
 import NotFound from "./pages/NotFound";
-
+import Edit from "./pages/Edit";
 
 // Imports: Components
 import Header from "./components/Header";
@@ -38,6 +38,8 @@ const AuthProvider = ({ children }) => {
   const storedToken = localStorage.getItem("token");
   const [isAuthenticated, setIsAuthenticated] = useState(!!storedToken);
   const [user, setUser] = useState([]);
+  const [admin, setAdmin] = useState(user.is_admin || false);
+  const [author, setAuthor] = useState(user.is_author || false);
 
   useEffect(() => {
     setIsAuthenticated(!!storedToken);
@@ -45,7 +47,16 @@ const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ isAuthenticated, setIsAuthenticated, user, setUser }}
+      value={{
+        isAuthenticated,
+        setIsAuthenticated,
+        user,
+        setUser,
+        admin,
+        setAdmin,
+        author,
+        setAuthor,
+      }}
     >
       {children}
     </AuthContext.Provider>
@@ -124,6 +135,7 @@ function App() {
                 {/* BlogPosts can be seen by anybody, NOT edited (edit only by the author) */}
                 <Route path="/posts" element={<Posts />} />
                 <Route path="/posts/:id" element={<Posts />} />
+                <Route path="/edit" element={<Edit />} />
 
                 {/* Books and Characters can be seen by anybody, NOT edited /edit only by the admin */}
                 <Route path="/dragonlance_books" element={<Books />} />

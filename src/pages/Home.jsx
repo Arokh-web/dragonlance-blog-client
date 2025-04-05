@@ -4,13 +4,18 @@ import { useContext } from "react";
 import { AuthContext } from "../App";
 
 const Home = () => {
-  const { isAuthenticated } = useContext(AuthContext);
+  const { isAuthenticated, admin, author, user } = useContext(AuthContext);
 
   return (
     <div>
-      <div>
+      <div className="home-container flex-col">
         Welcome to the Dragonlance Blog! You are currently
-        {isAuthenticated ? "Logged in" : "Not logged in"}
+        {isAuthenticated ? " logged in" : "not logged in"}
+        <p>
+          Welcome {user.username}
+          {admin && "Boss!"}
+          {author && "author! What will be your next Blogpost?"}!
+        </p>
       </div>
 
       <Posts />
