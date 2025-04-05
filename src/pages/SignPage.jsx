@@ -2,11 +2,10 @@ import React, { useContext } from "react";
 import SignIn from "../components/SignIn";
 import SignUp from "../components/SignUp";
 import { AuthContext } from "../App";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const SignPage = () => {
   const { isAuthenticated, user } = useContext(AuthContext);
-  const navigate = useNavigate();
 
   if (isAuthenticated && user) {
     return (
@@ -16,11 +15,11 @@ const SignPage = () => {
         <p className="link-text">
           <Link to="/posts">Enter the Realm of Posts</Link>
         </p>
-        {user.is_admin && (
+        {/* {user.is_admin && (
           <p className="link-text">
             <Link to="/users">Access the Hall of Users</Link>
           </p>
-        )}
+        )} */}
       </div>
     );
   }

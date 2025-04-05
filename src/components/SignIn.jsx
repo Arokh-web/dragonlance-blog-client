@@ -10,7 +10,6 @@ const SignIn = () => {
     e.preventDefault();
     console.log("Sending login for:", JSON.stringify(username));
 
-    
     fetch(`${import.meta.env.VITE_API_URL}/users/login`, {
       method: "POST",
       headers: {
@@ -27,7 +26,7 @@ const SignIn = () => {
           setIsAuthenticated(true);
           localStorage.setItem("token", data.token);
           console.log("You are now logged in!");
-          window.location.href = "/posts";
+          window.location.href = "/";
         } else {
           console.log(data.error);
         }

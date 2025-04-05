@@ -12,7 +12,7 @@ import NotFound from "./pages/NotFound";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 
-// Modules
+// Imports: Modules
 import { Routes, Route, Navigate } from "react-router-dom";
 import { createContext, useContext, useEffect, useState } from "react";
 
@@ -120,6 +120,10 @@ function App() {
 
                 {/* User Profile Page */}
                 <Route path="/profile" element={<Profile />} />
+                <Route path="/profile/:id" element={<Profile />} />
+                <ProtectedLayout>
+                  <Route path="/profiles" element={<Profiles />} />
+                </ProtectedLayout>
 
                 {/* BlogPosts can be seen by anybody, NOT edited (edit only by the author) */}
                 <Route path="/posts" element={<Posts />} />
