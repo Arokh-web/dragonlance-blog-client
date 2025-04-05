@@ -27,7 +27,6 @@ const SignIn = () => {
         console.log("Login response:", data);
         setIsAuthenticated(true);
         console.log("User logged in:", data.username);
-
         setUser(data);
         setAdmin(data.is_admin);
         console.log("User ID admin?:", data.is_admin);

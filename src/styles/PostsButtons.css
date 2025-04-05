@@ -9,7 +9,7 @@
 
 /* Button-Bars here */
 .buttonbar-container {
-  @apply flex  flex-col gap-10 p-4 bg-white rounded-lg max-h-18 justify-around items-start;
+  @apply container flex  flex-col gap-10 p-4 bg-white rounded-lg max-h-18 justify-around items-start;
 }
 
 .buttonbar-container button {

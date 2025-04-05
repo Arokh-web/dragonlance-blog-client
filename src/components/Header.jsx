@@ -3,14 +3,23 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../App";
 import { useContext } from "react";
 
-
 const Header = () => {
-  const { setIsAuthenticated, isAuthenticated, user } = useContext(AuthContext);
+  const {
+    setIsAuthenticated,
+    isAuthenticated,
+    user,
+    admin,
+    author,
+    setAdmin,
+    setAuthor,
+  } = useContext(AuthContext);
   const { auth } = useContext(AuthContext);
 
   const handleLogout = () => {
     setIsAuthenticated(false);
     localStorage.removeItem("token");
+    setAdmin(false);
+    setAuthor(false);
   };
 
   return (
@@ -38,11 +47,7 @@ const Header = () => {
             <Link to="posts">Main Blog</Link>
           </li>
           <li className="header-nav-li">
-            {user.is_author || auth ? (
-              <Link to="edit">Create Post</Link>
-            ) : (
-              <></>
-            )}
+            {author || admin ? <Link to="edit">Create Post</Link> : <></>}
           </li>
           <li className="header-nav-li">
             <Link to="dragonlance_books">Books</Link>

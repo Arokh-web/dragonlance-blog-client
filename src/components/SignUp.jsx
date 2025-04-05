@@ -22,7 +22,7 @@ const SignUp = () => {
       .then((res) => res.json())
       .then((data) => {
         console.log("You are now signed up!");
-        window.location.href = "/signin";
+        window.location.href = "/signpage";
       })
       .catch((error) => {
         console.log("Sign-up failed: ", error);

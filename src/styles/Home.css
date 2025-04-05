@@ -1,5 +1,5 @@
 @import "tailwindcss";
 
 .home-container {
-  @apply flex flex-col items-center m-8 bg-gradient-to-r from-[#e0f2f1] to-[#b3e5fc] rounded-2xl p-6;
+  @apply container flex flex-col items-center m-8 bg-gradient-to-r from-[#e0f2f1] to-[#b3e5fc] rounded-2xl p-6;
 }
