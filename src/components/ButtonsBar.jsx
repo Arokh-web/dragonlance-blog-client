@@ -4,27 +4,32 @@ import { useContext } from "react";
 import { AuthContext } from "../App";
 
 const ButtonsBar = ({ postId }) => {
-  const { user } = useContext(AuthContext);
-  const { auth } = useContext(AuthContext);
+  const { admin, author } = useContext(AuthContext);
   const { id } = useParams();
+
+  const copyLink = () => {
+    navigator.clipboard.writeText(window.location.href).then(() => {
+      console.log("Link copied to clipboard!");
+    });
+  };
 
   return (
     <div className="buttonbar-container">
       {/* FOR OVERVIEW / POSTS PAGE - BUTTON BAR 1 */}
       {/* BUTTONS for every user */}
       <div className="buttons-every-user-container">
-        <button>Like </button>
-        <button>Share</button>
-        <button>Copy Link to Post</button>
         {!id ? (
           <Link to={`/posts/${postId}`}>
             <button>Read more</button>
           </Link>
         ) : (
-          <Link to={`posts`}>
+          <Link to={`/`}>
             <button className="mt-25">Back</button>
           </Link>
         )}
+        <button>Like </button>
+        <button>Share</button>
+        <button onClick={copyLink}>Copy Link to Post</button>
       </div>
 
       {/* FOR DETAIL PAGE BUTTON BAR 2*/}
@@ -32,15 +37,16 @@ const ButtonsBar = ({ postId }) => {
       {id ? (
         <>
           {/* BUTTONS for post-author*/}
-          {user.is_author && (
-            <div className="buttons-post-author-container">
-              <button>Edit</button>
-              <button>Delete</button>
-            </div>
-          )}
+          {author ||
+            (admin && (
+              <div className="buttons-post-author-container">
+                <button>Edit</button>
+                <button>Delete</button>
+              </div>
+            ))}
 
           {/* BUTTONS for admin */}
-          {user.is_admin && (
+          {admin && (
             <div className="buttons-admin-container">
               <button>Block</button>
               <button>Moderate</button>

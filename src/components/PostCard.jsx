@@ -1,13 +1,9 @@
 import React from "react";
 import { useState, useEffect, useContext } from "react";
-import { useParams } from "react-router-dom";
 import { AuthContext, PostDataContext } from "../App";
-import { useNavigate } from "react-router-dom";
 import ButtonsBar from "./ButtonsBar";
 
 const PostCard = ({ post }) => {
-  const { isAuthenticated } = useContext(AuthContext);
-  const { auth } = useContext(AuthContext);
   const [author, setAuthor] = useState([]);
   //   Overview: picture, title, short/teaser about text (cut?) book/char link,
   //       detail-button, like, ;

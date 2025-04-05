@@ -5,6 +5,8 @@ const SignIn = () => {
   const { setIsAuthenticated, setUser } = useContext(AuthContext);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [admin, setAdmin] = useState(false);
+  const [author, setAuthor] = useState(false);
 
   const handleSignIn = (e) => {
     e.preventDefault();
@@ -28,10 +30,15 @@ const SignIn = () => {
           setIsAuthenticated(true);
           setUser(data);
           localStorage.setItem("token", data.created_at);
-          console.log(
-            "You are now logged in! Specific token for you consists of the unique date of signup"
-          );
+
           window.location.href = "/";
+          if (data.is_admin) {
+            setAdmin(true);
+          }
+
+          if (data.is_author) {
+            setAuthor(true);
+          }
         } else {
           console.log(data.error);
         }

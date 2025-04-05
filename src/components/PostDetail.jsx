@@ -2,6 +2,7 @@ import React, { use } from "react";
 import { useContext, useEffect, useState } from "react";
 import { BookDataContext, CharacterDataContext } from "../App";
 import { useParams, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import ButtonsBar from "./ButtonsBar";
 
 const PostDetail = ({ post }) => {
@@ -95,7 +96,8 @@ const PostDetail = ({ post }) => {
         {post.ref_character_id && (
           <div>
             <span className="font-semibold text-sm text-gray-700">
-              Character Reference: {current_char_ref.name}
+              Character Reference:{" "}
+              <Link to={"/characters"}> {current_char_ref.name}</Link>
             </span>
           </div>
         )}

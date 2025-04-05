@@ -10,7 +10,6 @@ const Posts = () => {
   const { id } = useParams(); // Get the id from the URL parameters
 
   const selectedPost = posts.find((post) => post.id === parseInt(id)); // Find the selected post from the posts array
-  console.log("Selected Post:", selectedPost); // Log the selected post for debugging
 
   return (
     <div>
