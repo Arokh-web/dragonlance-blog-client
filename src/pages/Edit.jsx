@@ -1,53 +1,47 @@
 import React, { useState } from "react";
+import { useParams } from "react-router-dom";
+import { useEffect } from "react";
+import EditForm from "../components/EditForm";
 
-const PostEditForm = ({ post, onSave }) => {
-//   const [title, setTitle] = useState(post.title);
-//   const [content, setContent] = useState(post.content);
-//   const [cover, setCover] = useState(post.cover);
+const EditPage = ({ post }) => {
+  const { id } = useParams();
+  const [postEdit, setPostEdit] = useState(post);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    onSave({
-      ...post,
-      title,
-      content,
-      cover,
-    });
+  useEffect(() => {
+    fetch(`${import.meta.env.VITE_API_URL}/posts/${id}`, {
+      method: "GET",
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => setPost(data[0]));
+  }, [id]);
+
+  const handlePostUpdate = (updatedPost) => {
+    fetch(`${import.meta.env.VITE_API_URL}/posts`, {
+      method: "PUT",
+      headers: {
+        mode: "cors",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(updatedPost),
+    })
+      .then((res) => res.json())
+      .then(() => {
+        alert("Post updated!");
+        window.location.href = `/posts/${id}`;
+      });
   };
 
+  if (!post) return <div>Loading...</div>;
+
   return (
-    <form onSubmit={handleSubmit} className="edit-form">
-      <h2>Edit Post</h2>
-
-      <label className="form-label">Title</label>
-      <input
-        className="input-style"
-        type="text"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-      />
-
-      <label className="form-label">Content</label>
-      <textarea
-        className="input-style"
-        rows="10"
-        value={content}
-        onChange={(e) => setContent(e.target.value)}
-      />
-
-      <label className="form-label">Cover Image Filename</label>
-      <input
-        className="input-style"
-        type="text"
-        value={cover}
-        onChange={(e) => setCover(e.target.value)}
-      />
-
-      <button className="button-style mt-4" type="submit">
-        Save Changes
-      </button>
-    </form>
+    <div>
+      <EditForm post={postEdit} onSave={handlePostUpdate} />
+    </div>
   );
 };
 
-export default PostEditForm;
+export default EditPage;

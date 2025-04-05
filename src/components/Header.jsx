@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../App";
 import { useContext } from "react";
 
+
 const Header = () => {
   const { setIsAuthenticated, isAuthenticated, user } = useContext(AuthContext);
   const { auth } = useContext(AuthContext);
@@ -38,7 +39,7 @@ const Header = () => {
           </li>
           <li className="header-nav-li">
             {user.is_author || auth ? (
-              <Link to="posts/new">Create Post</Link>
+              <Link to="edit">Create Post</Link>
             ) : (
               <></>
             )}

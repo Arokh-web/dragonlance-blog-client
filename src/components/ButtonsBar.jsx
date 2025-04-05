@@ -41,9 +41,10 @@ const ButtonsBar = ({ postId }) => {
           {/* BUTTONS for post-author*/}
           {(author || admin) && (
             <div className="buttons-post-author-container">
-              <Link to={edit} post={post}>
+              <Link to={`/posts/${postId}/edit`}>
                 <button>Edit</button>
               </Link>
+
               <button>Delete</button>
             </div>
           )}

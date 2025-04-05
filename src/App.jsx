@@ -135,6 +135,7 @@ function App() {
                 {/* BlogPosts can be seen by anybody, NOT edited (edit only by the author) */}
                 <Route path="/posts" element={<Posts />} />
                 <Route path="/posts/:id" element={<Posts />} />
+                <Route path="/posts/:id/edit" element={<Edit />} />
                 <Route path="/edit" element={<Edit />} />
 
                 {/* Books and Characters can be seen by anybody, NOT edited /edit only by the admin */}
