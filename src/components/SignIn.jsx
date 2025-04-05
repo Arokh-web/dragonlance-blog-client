@@ -3,19 +3,21 @@ import { AuthContext } from "../App";
 
 const SignIn = () => {
   const { setIsAuthenticated } = useContext(AuthContext);
-  const [email, setEmail] = useState("");
-  const [password, setpassword] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleSignIn = (e) => {
     e.preventDefault();
+    console.log("Sending login for:", JSON.stringify(username));
 
+    
     fetch(`${import.meta.env.VITE_API_URL}/users/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        email: email,
+        username: username.trim(),
         password_hash: password,
       }),
     })
@@ -27,7 +29,7 @@ const SignIn = () => {
           console.log("You are now logged in!");
           window.location.href = "/posts";
         } else {
-          alert(data.error);
+          console.log(data.error);
         }
       });
   };
@@ -38,10 +40,10 @@ const SignIn = () => {
       <form className="sign-form" onSubmit={handleSignIn}>
         <input
           type="text"
-          name="email"
-          placeholder="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          name="username"
+          placeholder="Username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
           className="input-style"
         />
         <input
@@ -49,7 +51,7 @@ const SignIn = () => {
           name="password"
           placeholder="password"
           value={password}
-          onChange={(e) => setpassword(e.target.value)}
+          onChange={(e) => setPassword(e.target.value)}
           className="input-style"
         />
         <button className="button-style" type="submit">
