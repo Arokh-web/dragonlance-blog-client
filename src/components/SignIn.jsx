@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import { AuthContext } from "../App";
 
 const SignIn = () => {
-  const { setIsAuthenticated } = useContext(AuthContext);
+  const { setIsAuthenticated, setUser } = useContext(AuthContext);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -12,6 +12,7 @@ const SignIn = () => {
 
     fetch(`${import.meta.env.VITE_API_URL}/users/login`, {
       method: "POST",
+      mode: "cors",
       headers: {
         "Content-Type": "application/json",
       },
@@ -22,10 +23,14 @@ const SignIn = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        if (data.token) {
+        console.log("Login response:", data);
+        if (data.created_at) {
           setIsAuthenticated(true);
-          localStorage.setItem("token", data.token);
-          console.log("You are now logged in!");
+          setUser(data);
+          localStorage.setItem("token", data.created_at);
+          console.log(
+            "You are now logged in! Specific token for you consists of the unique date of signup"
+          );
           window.location.href = "/";
         } else {
           console.log(data.error);

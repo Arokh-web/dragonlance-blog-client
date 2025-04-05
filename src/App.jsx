@@ -5,6 +5,7 @@ import Books from "./pages/Books";
 import Characters from "./pages/Characters";
 import SignPage from "./pages/SignPage";
 import Profile from "./pages/Profile";
+import ProfilesAdmin from "./pages/ProfilesAdmin";
 import Users from "./pages/Users";
 import NotFound from "./pages/NotFound";
 
@@ -36,18 +37,6 @@ const AuthProvider = ({ children }) => {
   const storedToken = localStorage.getItem("token");
   const [isAuthenticated, setIsAuthenticated] = useState(!!storedToken);
   const [user, setUser] = useState([]);
-
-  // DEFINING USER after login
-  if (storedToken) {
-    fetch(`${import.meta.env.VITE_API_URL}/me`, {
-      headers: { Authorization: `Bearer ${storedToken}` },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setUser(data); //to get is_admin, is_author etc.
-        setIsAuthenticated(true);
-      });
-  }
 
   useEffect(() => {
     setIsAuthenticated(!!storedToken);
@@ -121,9 +110,15 @@ function App() {
                 {/* User Profile Page */}
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/profile/:id" element={<Profile />} />
-                <ProtectedLayout>
-                  <Route path="/profiles" element={<Profiles />} />
-                </ProtectedLayout>
+
+                <Route
+                  path="/profiles"
+                  element={
+                    <ProtectedLayout>
+                      <ProfilesAdmin />
+                    </ProtectedLayout>
+                  }
+                />
 
                 {/* BlogPosts can be seen by anybody, NOT edited (edit only by the author) */}
                 <Route path="/posts" element={<Posts />} />

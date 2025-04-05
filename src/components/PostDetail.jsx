@@ -7,6 +7,7 @@ import ButtonsBar from "./ButtonsBar";
 const PostDetail = ({ post }) => {
   const { books } = useContext(BookDataContext);
   const { characters } = useContext(CharacterDataContext);
+  const [author, setAuthor] = useState([]);
 
   // const { id } = useParams();
   // const isEditMode = id === "new";
@@ -25,39 +26,33 @@ const PostDetail = ({ post }) => {
   //   }
   // }, [id, isEditMode]);
 
-  const [author, setAuthor] = useState([]);
+  useEffect(() => {
+    fetch(`${import.meta.env.VITE_API_URL}/users/${post.author_id}`, {
+      method: "GET",
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (!data) {
+          console.error("Author not found");
+          return;
+        }
+        setAuthor(data[0]);
+      });
+  }, [post]);
 
   if (!post) {
     return <div>Loading...</div>;
   }
-
-  useEffect(() => {
-    if (post.author_id) {
-      fetch(`${import.meta.env.VITE_API_URL}/users/${post.author_id}`, {
-        method: "GET",
-        mode: "cors",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          if (!data) {
-            console.error("Author not found");
-            return;
-          }
-          setAuthor(data[0]);
-        });
-    }
-  }, [post]);
 
   const rawDate = new Date(post.date);
   const [date, time] = [
     rawDate.toISOString().slice(0, 10),
     rawDate.toTimeString().slice(0, 5),
   ];
-
-  console.log(author);
 
   const current_book_ref =
     post.ref_book_id && books?.length

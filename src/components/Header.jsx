@@ -4,7 +4,7 @@ import { AuthContext } from "../App";
 import { useContext } from "react";
 
 const Header = () => {
-  const { setIsAuthenticated, isAuthenticated } = useContext(AuthContext);
+  const { setIsAuthenticated, isAuthenticated, user } = useContext(AuthContext);
   const { auth } = useContext(AuthContext);
 
   const handleLogout = () => {
@@ -37,7 +37,7 @@ const Header = () => {
             <Link to="posts">Main Blog</Link>
           </li>
           <li className="header-nav-li">
-            {isAuthenticated || auth ? (
+            {user.is_author || auth ? (
               <Link to="posts/new">Create Post</Link>
             ) : (
               <></>
