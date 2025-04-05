@@ -7,7 +7,7 @@ const Books = () => {
 
   return (
     <div className="page-container">
-      <h1 className="page-title">Dragonlance Books</h1>
+      <h1 className="page-title"></h1>
       {books.map((book) => (
         <BookCard key={book.id} book={book} />
       ))}

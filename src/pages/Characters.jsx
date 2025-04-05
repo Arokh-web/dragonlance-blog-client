@@ -7,7 +7,7 @@ const Characters = () => {
 
   return (
     <div className="page-container">
-      <h1 className="page-title">Characters of Krynn</h1>
+      <h1 className="page-title"></h1>
       {characters.map((char) => (
         <CharacterCard key={char.id} character={char} />
       ))}

@@ -10,7 +10,7 @@ const EditPage = ({ post }) => {
   useEffect(() => {
     fetch(`${import.meta.env.VITE_API_URL}/posts/${id}`, {
       method: "GET",
-      mode: "cors",
+      mode: "no-cors",
       headers: {
         "Content-Type": "application/json",
       },
