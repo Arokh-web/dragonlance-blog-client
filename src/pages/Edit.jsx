@@ -1,23 +1,22 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
-import { useEffect } from "react";
+// import { useEffect, useState } from "react";
 import EditForm from "../components/EditForm";
 
 const EditPage = ({ post }) => {
   const { id } = useParams();
-  const [postEdit, setPostEdit] = useState(post);
 
-  const loadPost = (id) => {
-    fetch(`${import.meta.env.VITE_API_URL}/posts/${id}`, {
-      method: "GET",
-      mode: "cors",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => setPostEdit(data[0]));
-  };
+  //   const loadPost = (id) => {
+  //     fetch(`${import.meta.env.VITE_API_URL}/posts/${id}`, {
+  //       method: "GET",
+  //       mode: "cors",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //     })
+  //       .then((res) => res.json())
+  //       .then((data) => setPostEdit(data[0]));
+  //   };
 
   const handlePostUpdate = (updatedPost) => {
     fetch(`${import.meta.env.VITE_API_URL}/posts`, {
@@ -35,20 +34,18 @@ const EditPage = ({ post }) => {
       });
   };
 
-  id === undefined ? (
-    <div>
-      Error Loading...
-      <EditForm onSave={handlePostUpdate} />
-    </div>
-  ) : (
-    loadPost(id)
-  );
-
-  if (!post) return <div>Loading...</div>;
+  //   id === undefined ? (
+  //     <div>
+  //       Error Loading...
+  //       <EditForm onSave={handlePostUpdate} />
+  //     </div>
+  //   ) : (
+  //     loadPost(id)
+  //   );
 
   return (
     <div>
-      <EditForm post={postEdit} onSave={handlePostUpdate} />
+      <EditForm post={post} onSave={handlePostUpdate} />
     </div>
   );
 };
