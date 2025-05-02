@@ -1,0 +1,38 @@
+import { useEffect } from "react";
+import { createContext } from "react";
+
+export const PostDataContext = createContext();
+export const BookDataContext = createContext();
+export const CharacterDataContext = createContext();
+export const UserDataContext = createContext();
+
+// FETCHING DATA FROM API
+useEffect(() => {
+  fetch(`${import.meta.env.VITE_API_URL}/posts`, {
+    method: "GET",
+    mode: "cors",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then((res) => res.json())
+    .then(setPosts);
+  fetch(`${import.meta.env.VITE_API_URL}/dragonlance_books`, {
+    method: "GET",
+    mode: "cors",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then((res) => res.json())
+    .then(setBooks);
+  fetch(`${import.meta.env.VITE_API_URL}/dragonlance_characters`, {
+    method: "GET",
+    mode: "cors",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then((res) => res.json())
+    .then(setCharacters);
+}, []);

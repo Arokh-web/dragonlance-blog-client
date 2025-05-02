@@ -18,6 +18,13 @@ import Footer from "./components/Footer";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { createContext, useContext, useEffect, useState } from "react";
 
+// Imports: Contexts
+import { PostDataContext } from "./API/APIConnection";
+import { BookDataContext } from "./API/APIConnection";
+import { CharacterDataContext } from "./API/APIConnection";
+import { UserDataContext } from "./API/APIConnection";
+import { AuthContext, AuthProvider } from "./API/AuthProvider";
+
 // Imports: CSS
 import "./styles/App.css";
 import "./styles/Header.css";
@@ -27,41 +34,6 @@ import "./styles/PostsButtons.css";
 import "./styles/SignElements.css";
 
 // Contexts
-const AuthContext = createContext();
-const PostDataContext = createContext();
-const BookDataContext = createContext();
-const CharacterDataContext = createContext();
-const UserDataContext = createContext();
-
-// Auth Provider
-const AuthProvider = ({ children }) => {
-  const storedToken = localStorage.getItem("token");
-  const [isAuthenticated, setIsAuthenticated] = useState(!!storedToken);
-  const [user, setUser] = useState([]);
-  const [admin, setAdmin] = useState(user.is_admin || false);
-  const [author, setAuthor] = useState(user.is_author || false);
-
-  useEffect(() => {
-    setIsAuthenticated(!!storedToken);
-  }, [storedToken]);
-
-  return (
-    <AuthContext.Provider
-      value={{
-        isAuthenticated,
-        setIsAuthenticated,
-        user,
-        setUser,
-        admin,
-        setAdmin,
-        author,
-        setAuthor,
-      }}
-    >
-      {children}
-    </AuthContext.Provider>
-  );
-};
 
 // Protected Layout
 const ProtectedLayout = ({ children }) => {
@@ -73,37 +45,6 @@ function App() {
   const [posts, setPosts] = useState([]);
   const [books, setBooks] = useState([]);
   const [characters, setCharacters] = useState([]);
-
-  // FETCHING DATA FROM API
-  useEffect(() => {
-    fetch(`${import.meta.env.VITE_API_URL}/posts`, {
-      method: "GET",
-      mode: "cors",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .then(setPosts);
-    fetch(`${import.meta.env.VITE_API_URL}/dragonlance_books`, {
-      method: "GET",
-      mode: "cors",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .then(setBooks);
-    fetch(`${import.meta.env.VITE_API_URL}/dragonlance_characters`, {
-      method: "GET",
-      mode: "cors",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .then(setCharacters);
-  }, []);
 
   return (
     <div>
