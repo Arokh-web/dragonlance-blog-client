@@ -1,30 +1,44 @@
 import { useEffect, useState, createContext } from "react";
-
+import { fetchUser } from "./fetchData";
 
 const AuthContext = createContext();
 
 // Auth Provider
 const AuthProvider = ({ children }) => {
-    const [isAuthenticated, setIsAuthenticated] = useState(!!storedToken);
-  const [user, setUser] = useState(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [user, setUser] = useState(false);
   const [admin, setAdmin] = useState(false);
   const [author, setAuthor] = useState(false);
 
   useEffect(() => {
     const storedToken = localStorage.getItem("token");
-    setIsAuthenticated(!!storedToken);
 
-    const storedUser = JSON.parse(localStorage.getItem("user"));
-    if (storedUser) {
-      setUser(storedUser);
-      setAdmin(storedUser.is_admin);
-      setAuthor(storedUser.is_author);
+    if (storedToken) {
+      setIsAuthenticated(true);
     } else {
-      setUser(null);
-      setAdmin(false);
-      setAuthor(false);
+      setIsAuthenticated(false);
     }
-  }, [storedToken]);
+  }, []); // Runs once the site loads
+
+  // function for loading the userdata only when needed, e.g. for the profile page or authorization; ID needed
+  const loadUser = async (userID) => {
+    try {
+      const storedUser = await fetchUser(userID);
+
+      if (storedUser) {
+        setUser(storedUser.is_user);
+        setAdmin(storedUser.is_admin);
+        setAuthor(storedUser.is_author);
+      } else {
+        setUser(false);
+        setAdmin(false);
+        setAuthor(false);
+        console.error("User not found:", error);
+      }
+    } catch (error) {
+      console.error("Fetching failed:", error);
+    }
+  };
 
   return (
     <AuthContext.Provider
@@ -37,6 +51,8 @@ const AuthProvider = ({ children }) => {
         setAdmin,
         author,
         setAuthor,
+        // offers the loadUser function for all the children components
+        loadUser,
       }}
     >
       {children}
@@ -45,4 +61,4 @@ const AuthProvider = ({ children }) => {
 };
 // Auth Provider END
 
-export { AuthContext, AuthProvider };
+export { AuthProvider };
